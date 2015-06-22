@@ -8,6 +8,7 @@ File.Version=5
 KeepUserPlacement=false
 Mcu.Family=STM32F1
 Mcu.IP0=ADC1
+<<<<<<< HEAD
 Mcu.IP1=FATFS
 Mcu.IP10=USB
 Mcu.IP11=USB_DEVICE
@@ -20,6 +21,19 @@ Mcu.IP7=SPI1
 Mcu.IP8=SYS
 Mcu.IP9=TIM1
 Mcu.IPNb=12
+=======
+Mcu.IP1=FREERTOS
+Mcu.IP10=USB_DEVICE
+Mcu.IP2=I2C1
+Mcu.IP3=NVIC
+Mcu.IP4=RCC
+Mcu.IP5=RTC
+Mcu.IP6=SPI1
+Mcu.IP7=SYS
+Mcu.IP8=TIM1
+Mcu.IP9=USB
+Mcu.IPNb=11
+>>>>>>> 0d1485d13dcf68920beea3097e0fe72d556eec6f
 Mcu.Name=STM32F103C(8-B)Tx
 Mcu.Package=LQFP48
 Mcu.Pin0=PC13-TAMPER-RTC
@@ -41,9 +55,14 @@ Mcu.Pin22=PA14
 Mcu.Pin23=PB5
 Mcu.Pin24=PB6
 Mcu.Pin25=PB7
+<<<<<<< HEAD
 Mcu.Pin26=VP_FATFS_VS_Generic
 Mcu.Pin27=VP_FREERTOS_VS_ENABLE
 Mcu.Pin28=VP_USB_DEVICE_VS_USB_DEVICE_CDC_FS
+=======
+Mcu.Pin26=VP_FREERTOS_VS_ENABLE
+Mcu.Pin27=VP_USB_DEVICE_VS_USB_DEVICE_CDC_FS
+>>>>>>> 0d1485d13dcf68920beea3097e0fe72d556eec6f
 Mcu.Pin3=PA0-WKUP
 Mcu.Pin4=PA1
 Mcu.Pin5=PA2
@@ -51,7 +70,11 @@ Mcu.Pin6=PA3
 Mcu.Pin7=PA4
 Mcu.Pin8=PA5
 Mcu.Pin9=PA6
+<<<<<<< HEAD
 Mcu.PinsNb=29
+=======
+Mcu.PinsNb=28
+>>>>>>> 0d1485d13dcf68920beea3097e0fe72d556eec6f
 Mcu.UserName=STM32F103CBTx
 MxCube.Version=4.8.0
 MxDb.Version=DB.4.0.80
@@ -240,8 +263,8 @@ SH.GPXTI5.0=GPIO_EXTI5
 SH.GPXTI5.ConfNb=1
 SH.S_TIM1_CH1.0=TIM1_CH1,PWM Generation1 CH1
 SH.S_TIM1_CH1.ConfNb=1
-SPI1.BaudRatePrescaler=SPI_BAUDRATEPRESCALER_4
-SPI1.CalculateBaudRate=18.0 MBits/s
+SPI1.BaudRatePrescaler=SPI_BAUDRATEPRESCALER_8
+SPI1.CalculateBaudRate=9.0 MBits/s
 SPI1.IPParameters=BaudRatePrescaler,Mode,CalculateBaudRate
 SPI1.Mode=SPI_MODE_MASTER
 TIM1.Channel-Output\ Compare2\ CH2N=TIM_CHANNEL_2
