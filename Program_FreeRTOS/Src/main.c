@@ -373,14 +373,36 @@ void MX_GPIO_Init(void)
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
 {
+	GPIO_InitTypeDef GPIO_InitStruct;
+	uint8_t flag_buttom_press = 0;
+	
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
 
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
+	
+  /*Configure GPIO pins : PB15 PB14 */
+  GPIO_InitStruct.Pin = GPIO_PIN_15|GPIO_PIN_14;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//enable MMA7264
+	
   for(;;)
   {
-    osDelay(1);
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
+    osDelay(100);
+		
+		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 1) && (flag_buttom_press == 0))
+			{	
+			  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
+				flag_buttom_press = 1;
+			}
+		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 0) && (flag_buttom_press == 1))
+			flag_buttom_press = 0;
+		
   }
   /* USER CODE END 5 */ 
 }
