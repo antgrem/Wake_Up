@@ -35,8 +35,13 @@
 #include "stm32f1xx_hal.h"
 #include "cmsis_os.h"
 #include "usb_device.h"
+#include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN Includes */
+#define ADC_0V_VALUE                            0
+#define ADC_1V_VALUE                            1241
+#define ADC_2V_VALUE                            2482
+#define ADC_3V_VALUE                            3723
 
 /* USER CODE END Includes */
 
@@ -66,13 +71,14 @@ static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM1_Init(void);
 void StartDefaultTask(void const * argument);
+void Work_with_ADC(void);
 
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+uint16_t adc_X = 0, adc_Y = 0, adc_Z = 0;
 /* USER CODE END 0 */
 
 int main(void)
@@ -205,6 +211,20 @@ void MX_ADC1_Init(void)
     */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+	
+	    /**Configure Regular Channel 
+    */
+  sConfig.Channel = ADC_CHANNEL_2;
+  sConfig.Rank = 2;
+  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+	
+	    /**Configure Regular Channel 
+    */
+  sConfig.Channel = ADC_CHANNEL_3;
+  sConfig.Rank = 3;
   sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
@@ -367,7 +387,22 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void Work_with_ADC(void)
+{
+	char str[50];
+	
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, 10);
+	adc_X =	HAL_ADC_GetValue(&hadc1);
+	
+	if (adc_X > ADC_2V_VALUE)
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+	else
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
 
+	sprintf(str, "x= %d, y= %d, z= %d\n", adc_X, adc_Y, adc_Z);
+	CDC_Transmit_FS((uint8_t*)str, sizeof(str));
+}
 /* USER CODE END 4 */
 
 /* StartDefaultTask function */
@@ -390,20 +425,26 @@ void StartDefaultTask(void const * argument)
 	
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//enable MMA7264
 	
-  for(;;)
-  {
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
-    osDelay(100);
-		
-		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 1) && (flag_buttom_press == 0))
-			{	
-			  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
-				flag_buttom_press = 1;
-			}
-		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 0) && (flag_buttom_press == 1))
-			flag_buttom_press = 0;
-		
-  }
+	while(1)
+	{
+		Work_with_ADC();
+		osDelay(100);
+	}
+	
+//  for(;;)
+//  {
+//		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
+//    osDelay(100);
+//		
+//		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 1) && (flag_buttom_press == 0))
+//			{	
+//			  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
+//				flag_buttom_press = 1;
+//			}
+//		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 0) && (flag_buttom_press == 1))
+//			flag_buttom_press = 0;
+//		
+//  }
   /* USER CODE END 5 */ 
 }
 
@@ -426,6 +467,31 @@ void assert_failed(uint8_t* file, uint32_t line)
 }
 
 #endif
+
+
+/* Uncomment the line below to expanse the "assert_param" macro in the 
+   Standard Peripheral Library drivers code */
+/* #define USE_FULL_ASSERT    1 */
+
+/* Exported macro ------------------------------------------------------------*/
+#ifdef  USE_FULL_ASSERT
+
+/**
+  * @brief  The assert_param macro is used for function's parameters check.
+  * @param  expr: If expr is false, it calls assert_failed function
+  *   which reports the name of the source file and the source
+  *   line number of the call that failed. 
+  *   If expr is true, it returns no value.
+  * @retval None
+  */
+  #define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
+/* Exported functions ------------------------------------------------------- */
+  void assert_failed(uint8_t* file, uint32_t line);
+#else
+  #define assert_param(expr) ((void)0)
+#endif /* USE_FULL_ASSERT */
+	
+	
 
 /**
   * @}
