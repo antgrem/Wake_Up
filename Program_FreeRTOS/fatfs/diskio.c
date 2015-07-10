@@ -56,7 +56,7 @@
 
 /* Definitions of physical drive number for each media */
 #define ATA		0
-#define USB		1
+#define USB_def		1
 
 /*-----------------------------------------------------------------------*/
 /* Inidialize a Drive                                                    */
@@ -75,7 +75,7 @@ DSTATUS disk_initialize (
 				status = TM_FATFS_SD_disk_initialize();			/* SPI communication */
 			#endif
 			break;
-		case USB:	/* USB storage */
+		case USB_def:	/* USB storage */
 			#if FATFS_USE_USB == 1
 				status = TM_FATFS_USB_disk_initialize();			/* USB */
 			#endif
@@ -108,7 +108,7 @@ DSTATUS disk_status (
 				status = TM_FATFS_SD_disk_status();		/* SPI communication */
 			#endif
 			break;
-		case USB:	/* USB storage */
+		case USB_def:	/* USB storage */
 			#if FATFS_USE_USB == 1
 				status = TM_FATFS_USB_disk_status();				/* USB */
 			#endif
@@ -142,7 +142,7 @@ DRESULT disk_read (
 				status = TM_FATFS_SD_disk_read(buff, sector, count);		/* SPI communication */
 			#endif
 			break;
-		case USB:	/* USB storage */
+		case USB_def:	/* USB storage */
 			#if FATFS_USE_USB == 1
 				status = TM_FATFS_USB_disk_read(buff, sector, count);			/* USB */
 			#endif
@@ -181,7 +181,7 @@ DRESULT disk_write (
 				status = TM_FATFS_SD_disk_write(buff, sector, count);				/* SPI communication */
 			#endif
 			break;
-		case USB:	/* USB storage */
+		case USB_def:	/* USB storage */
 			#if FATFS_USE_USB == 1
 				status = TM_FATFS_USB_disk_write(buff, sector, count);					/* USB */
 			#endif
@@ -215,7 +215,7 @@ DRESULT disk_ioctl (
 				status = TM_FATFS_SD_disk_ioctl(cmd, buff);							/* SPI communication */
 			#endif
 			break;
-		case USB:	/* USB storage */
+		case USB_def:	/* USB storage */
 			#if FATFS_USE_USB == 1
 				status = TM_FATFS_USB_disk_ioctl(cmd, buff);						/* USB */
 			#endif
