@@ -53,3 +53,9 @@ program_freertos configuration\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio
 program_freertos configuration\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 program_freertos configuration\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h
+program_freertos configuration\main.o: ..\Inc\usbd_cdc_if.h
+program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h
+program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h
+program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h
+program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h
+program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h
