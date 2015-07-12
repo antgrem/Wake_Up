@@ -91,11 +91,7 @@ extern C {
 /**
  * Includes
  */
-#include "stm32f4xx.h"
-#include "stm32f4xx_rcc.h"
-#include "stm32f4xx_gpio.h"
-#include "stm32f4xx_spi.h"
-#include "defines.h"
+#include "stm32f1xx_hal.h"
 
 /**
  * Every SPIx can work in 4 different modes

@@ -36,12 +36,15 @@
 #include "cmsis_os.h"
 #include "usb_device.h"
 #include "usbd_cdc_if.h"
+#include <lm75.h>
+#include "fatfs_sd.h"
 
 /* USER CODE BEGIN Includes */
 #define ADC_0V_VALUE                            0
 #define ADC_1V_VALUE                            1241
 #define ADC_2V_VALUE                            2482
 #define ADC_3V_VALUE                            3723
+
 
 /* USER CODE END Includes */
 
@@ -57,7 +60,7 @@ SPI_HandleTypeDef hspi1;
 TIM_HandleTypeDef htim1;
 
 osThreadId defaultTaskHandle;
-
+osThreadId UserTaskHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -71,7 +74,9 @@ static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM1_Init(void);
 void StartDefaultTask(void const * argument);
+void UserDefaultTask(void const * argument);
 void Work_with_ADC(void);
+void LM75_RW(void);
 
 /* USER CODE BEGIN PFP */
 
@@ -104,6 +109,9 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM1_Init();
 
+  /* init code for USB_DEVICE */
+  MX_USB_DEVICE_Init();
+	
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -122,11 +130,12 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+  osThreadDef(UserTask, UserDefaultTask, osPriorityNormal, 0, 256);
+  UserTaskHandle = osThreadCreate(osThread(UserTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -195,12 +204,13 @@ void MX_ADC1_Init(void)
 {
 
   ADC_ChannelConfTypeDef sConfig;
+  ADC_InjectionConfTypeDef sConfigInjected;
 
     /**Common config 
     */
   hadc1.Instance = ADC1;
-  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
@@ -213,20 +223,24 @@ void MX_ADC1_Init(void)
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-	
-	    /**Configure Regular Channel 
+
+    /**Configure Injected Channel 
     */
-  sConfig.Channel = ADC_CHANNEL_2;
-  sConfig.Rank = 2;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-	
-	    /**Configure Regular Channel 
+  sConfigInjected.InjectedChannel = ADC_CHANNEL_2;
+  sConfigInjected.InjectedRank = 1;
+  sConfigInjected.InjectedNbrOfConversion = 2;
+  sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  sConfigInjected.ExternalTrigInjecConv = ADC_INJECTED_SOFTWARE_START;
+  sConfigInjected.AutoInjectedConv = ENABLE;
+  sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
+  sConfigInjected.InjectedOffset = 0;
+  HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+
+    /**Configure Injected Channel 
     */
-  sConfig.Channel = ADC_CHANNEL_3;
-  sConfig.Rank = 3;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+  sConfigInjected.InjectedChannel = ADC_CHANNEL_3;
+  sConfigInjected.InjectedRank = 2;
+  HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 
 }
 
@@ -365,6 +379,13 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	
+  /*Configure GPIO pin : PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PB0 PB10 PB11 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_10|GPIO_PIN_11;
@@ -394,14 +415,43 @@ void Work_with_ADC(void)
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_PollForConversion(&hadc1, 10);
 	adc_X =	HAL_ADC_GetValue(&hadc1);
+
+//	HAL_ADCEx_InjectedStart(&hadc1);
+//	HAL_ADCEx_InjectedPollForConversion(&hadc1, 10);
+	adc_Y =	HAL_ADCEx_InjectedGetValue(&hadc1, 1);
+	
+//	HAL_ADCEx_InjectedStart(&hadc1);
+//	HAL_ADCEx_InjectedPollForConversion(&hadc1, 10);
+	adc_Z =	HAL_ADCEx_InjectedGetValue(&hadc1, 2);
 	
 	if (adc_X > ADC_2V_VALUE)
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
 	else
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+	
+	if (adc_Y > ADC_2V_VALUE)
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET);
+	else
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
 
 	sprintf(str, "x= %d, y= %d, z= %d\n", adc_X, adc_Y, adc_Z);
-	CDC_Transmit_FS((uint8_t*)str, sizeof(str));
+//	CDC_Transmit_FS((uint8_t*)str, 3);
+}
+
+void LM75_RW(void)
+{
+	char str[50];
+	uint16_t temp16;
+	
+	adc_X = LM75_Temperature();
+	
+	str[0] = LM75_ReadConf();
+	LM75_WriteConf(str[0] & 0xFE);
+	
+	adc_Y = LM75_ReadReg(LM75_REG_CONF);
+	adc_Z = LM75_ReadReg(LM75_REG_THYS);
+	
+	sprintf(str, "x= %d\n", adc_X);
 }
 /* USER CODE END 4 */
 
@@ -411,8 +461,7 @@ void StartDefaultTask(void const * argument)
 	GPIO_InitTypeDef GPIO_InitStruct;
 	uint8_t flag_buttom_press = 0;
 	
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
+
 
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
@@ -423,18 +472,41 @@ void StartDefaultTask(void const * argument)
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//enable MMA7264
+  /*Configure GPIO pin : PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 	
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//enable MMA7264
+
+		
 	while(1)
 	{
-		Work_with_ADC();
+//		Work_with_ADC();
+//		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
+		LM75_RW();
 		osDelay(100);
+		
+		
+		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 1) && (flag_buttom_press == 0))
+			{	
+			  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+				flag_buttom_press = 1;
+			}
+		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 0) && (flag_buttom_press == 1))
+		{
+			flag_buttom_press = 0;
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+		}
 	}
 	
 //  for(;;)
 //  {
 //		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
-//    osDelay(100);
+//    osDelay(1000);
 //		
 //		if ((HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == 1) && (flag_buttom_press == 0))
 //			{	
@@ -447,6 +519,17 @@ void StartDefaultTask(void const * argument)
 //  }
   /* USER CODE END 5 */ 
 }
+
+
+void UserDefaultTask(void const * argument)
+{
+	while(1)
+	{
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
+		osDelay(100);
+	}
+}
+
 
 #ifdef USE_FULL_ASSERT
 
