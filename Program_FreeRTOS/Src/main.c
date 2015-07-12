@@ -45,6 +45,8 @@
 #define ADC_2V_VALUE                            2482
 #define ADC_3V_VALUE                            3723
 
+#define LM75_ADDRESS 0x9F
+#define PI 3.14159265
 
 /* USER CODE END Includes */
 
@@ -109,10 +111,19 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM1_Init();
 
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
-	
-  /* USER CODE BEGIN 2 */
+//  /* USER CODE BEGIN 2 */
+//	if(TM_STMPE811_Init() == TM_STMPE811_State_Ok)
+//		{
+//			if (TM_I2C_Read(STMPE811_I2C, LM75_ADDRESS, 0x00) == 0)
+//			{
+//				TM_ILI9341_Puts(60, 40, "Error init LM75", &TM_Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_RED);
+//			}
+//						
+//			TM_I2C_Write(STMPE811_I2C, STMPE811_ADDRESS, STMPE811_INT_CTRL, 0x03);
+//			TM_I2C_Write(STMPE811_I2C, STMPE811_ADDRESS, STMPE811_INT_STA, 0x01);
+//			TM_I2C_Write(STMPE811_I2C, STMPE811_ADDRESS, STMPE811_INT_EN, 0x01);	
+//		
+//		};
 
   /* USER CODE END 2 */
 

@@ -986,14 +986,22 @@
   </Group>
 
   <Group>
+<<<<<<< HEAD
     <GroupName>Fatfs</GroupName>
+=======
+    <GroupName>FatFS</GroupName>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>7</GroupNumber>
+<<<<<<< HEAD
       <FileNumber>50</FileNumber>
+=======
+      <FileNumber>46</FileNumber>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -1006,7 +1014,11 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
+<<<<<<< HEAD
       <FileNumber>51</FileNumber>
+=======
+      <FileNumber>47</FileNumber>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -1019,12 +1031,17 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
+<<<<<<< HEAD
       <FileNumber>52</FileNumber>
+=======
+      <FileNumber>48</FileNumber>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
+<<<<<<< HEAD
       <PathWithFileName>..\fatfs\drivers\fatfs_sd.c</PathWithFileName>
       <FilenameWithoutPath>fatfs_sd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -1040,19 +1057,32 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\fatfs\option\syscall.c</PathWithFileName>
       <FilenameWithoutPath>syscall.c</FilenameWithoutPath>
+=======
+      <PathWithFileName>..\fatfs\option\unicode.c</PathWithFileName>
+      <FilenameWithoutPath>unicode.c</FilenameWithoutPath>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
+<<<<<<< HEAD
       <FileNumber>54</FileNumber>
+=======
+      <FileNumber>49</FileNumber>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
+<<<<<<< HEAD
       <PathWithFileName>..\fatfs\option\unicode.c</PathWithFileName>
       <FilenameWithoutPath>unicode.c</FilenameWithoutPath>
+=======
+      <PathWithFileName>..\fatfs\drivers\fatfs_sd.c</PathWithFileName>
+      <FilenameWithoutPath>fatfs_sd.c</FilenameWithoutPath>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

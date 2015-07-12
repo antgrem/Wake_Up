@@ -3,9 +3,15 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
+<<<<<<< HEAD
 IDE-Version: µVision V5.13.0.0
 Copyright (C) 2014 ARM Ltd and ARM Germany GmbH. All rights reserved.
 License Information: ant Microsoft, Microsoft, LIC=LJWPC-75WAI-QIH5M-X92Z5-CWLZC-382JG
+=======
+IDE-Version: µVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: sdf gfd, sdf, LIC=----
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
  
 Tool Versions:
 Toolchain:       MDK-ARM Professional  Version: 5.13.0.0
@@ -21,6 +27,7 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
 Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
+<<<<<<< HEAD
 D:\01_Git\Wake_Up\Program_FreeRTOS\MDK-ARM\Program_FreeRTOS.uvprojx
 Project File Date:  06/29/2015
 
@@ -38,8 +45,104 @@ FromELF: creating hex file...
 <h2>Collection of Component include folders:</h2>
   D:\01_Git\Wake_Up\Program_FreeRTOS\MDK-ARM\RTE
   C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include
+=======
+D:\Temp\01_MC\SmartWatch\WakeUp\Program_FreeRTOS\MDK-ARM\Program_FreeRTOS.uvprojx
+Project File Date:  07/09/2015
+
+<h2>Output:</h2>
+Build target 'Program_FreeRTOS Configuration'
+compiling diskio.c...
+compiling fatfs_sd.c...
+..\fatfs\drivers\fatfs_sd.c(36): warning:  #223-D: function "TM_DELAY_Init" declared implicitly
+        TM_DELAY_Init();
+..\fatfs\drivers\fatfs_sd.c(38): warning:  #223-D: function "TM_SPI_Init" declared implicitly
+        TM_SPI_Init(FATFS_SPI, FATFS_SPI_PINSPACK);
+..\fatfs\drivers\fatfs_sd.c(38): error:  #20: identifier "TM_SPI_PinsPack_1" is undefined
+        TM_SPI_Init(FATFS_SPI, FATFS_SPI_PINSPACK);
+..\fatfs\drivers\fatfs_sd.c(39): error:  #136: struct "<unnamed>" has no field "BSRRL"
+        FATFS_CS_HIGH;
+..\fatfs\drivers\fatfs_sd.c(41): warning:  #223-D: function "Delayms" declared implicitly
+        Delayms(10);
+..\fatfs\drivers\fatfs_sd.c(51): warning:  #223-D: function "TM_SPI_Send" declared implicitly
+        return TM_SPI_Send(FATFS_SPI, dat);
+..\fatfs\drivers\fatfs_sd.c(63): warning:  #223-D: function "TM_SPI_ReadMulti" declared implicitly
+        TM_SPI_ReadMulti(FATFS_SPI, buff, 0xFF, btr);
+..\fatfs\drivers\fatfs_sd.c(78): warning:  #223-D: function "TM_SPI_WriteMulti" declared implicitly
+        TM_SPI_WriteMulti(FATFS_SPI, (uint8_t *)buff, btx);
+..\fatfs\drivers\fatfs_sd.c(93): warning:  #223-D: function "TM_DELAY_SetTime2" declared implicitly
+        TM_DELAY_SetTime2(wt);
+..\fatfs\drivers\fatfs_sd.c(96): warning:  #223-D: function "TM_DELAY_Time2" declared implicitly
+        } while (d != 0xFF && TM_DELAY_Time2());        /* Wait for card goes ready or timeout */
+..\fatfs\drivers\fatfs_sd.c(113): error:  #136: struct "<unnamed>" has no field "BSRRL"
+        FATFS_CS_HIGH;                  /* CS = H */
+..\fatfs\drivers\fatfs_sd.c(126): error:  #136: struct "<unnamed>" has no field "BSRRH"
+        FATFS_CS_LOW;
+..\fatfs\drivers\fatfs_sd.c(155): warning:  #223-D: function "TM_DELAY_SetTime2" declared implicitly
+        TM_DELAY_SetTime2(200);
+..\fatfs\drivers\fatfs_sd.c(159): warning:  #223-D: function "TM_DELAY_Time2" declared implicitly
+        } while ((token == 0xFF) && TM_DELAY_Time2());
+..\fatfs\drivers\fatfs_sd.c(261): warning:  #223-D: function "RCC_AHB1PeriphClockCmd" declared implicitly
+        RCC_AHB1PeriphClockCmd(FATFS_CS_RCC, ENABLE);   
+..\fatfs\drivers\fatfs_sd.c(261): error:  #20: identifier "RCC_AHB1Periph_GPIOB" is undefined
+        RCC_AHB1PeriphClockCmd(FATFS_CS_RCC, ENABLE);   
+..\fatfs\drivers\fatfs_sd.c(263): error:  #136: struct "<unnamed>" has no field "GPIO_Pin"
+        GPIO_InitStruct.GPIO_Pin = FATFS_CS_PIN;
+..\fatfs\drivers\fatfs_sd.c(264): error:  #136: struct "<unnamed>" has no field "GPIO_Mode"
+        GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+..\fatfs\drivers\fatfs_sd.c(264): error:  #20: identifier "GPIO_Mode_OUT" is undefined
+        GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+..\fatfs\drivers\fatfs_sd.c(265): error:  #136: struct "<unnamed>" has no field "GPIO_OType"
+        GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+..\fatfs\drivers\fatfs_sd.c(265): error:  #20: identifier "GPIO_OType_PP" is undefined
+        GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+..\fatfs\drivers\fatfs_sd.c(266): error:  #136: struct "<unnamed>" has no field "GPIO_PuPd"
+        GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+..\fatfs\drivers\fatfs_sd.c(266): error:  #20: identifier "GPIO_PuPd_DOWN" is undefined
+        GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+..\fatfs\drivers\fatfs_sd.c(267): error:  #136: struct "<unnamed>" has no field "GPIO_Speed"
+        GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+..\fatfs\drivers\fatfs_sd.c(267): error:  #20: identifier "GPIO_Speed_100MHz" is undefined
+        GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+..\fatfs\drivers\fatfs_sd.c(269): warning:  #223-D: function "GPIO_Init" declared implicitly
+        GPIO_Init(FATFS_CS_PORT, &GPIO_InitStruct);
+..\fatfs\drivers\fatfs_sd.c(274): error:  #136: struct "<unnamed>" has no field "GPIO_Pin"
+        GPIO_InitStruct.GPIO_Pin = FATFS_USE_DETECT_PIN_PIN;
+..\fatfs\drivers\fatfs_sd.c(275): error:  #136: struct "<unnamed>" has no field "GPIO_Mode"
+        GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+..\fatfs\drivers\fatfs_sd.c(275): error:  #20: identifier "GPIO_Mode_IN" is undefined
+        GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+..\fatfs\drivers\fatfs_sd.c(276): error:  #136: struct "<unnamed>" has no field "GPIO_OType"
+        GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+..\fatfs\drivers\fatfs_sd.c(277): error:  #136: struct "<unnamed>" has no field "GPIO_PuPd"
+        GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+..\fatfs\drivers\fatfs_sd.c(277): error:  #20: identifier "GPIO_PuPd_UP" is undefined
+        GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+..\fatfs\drivers\fatfs_sd.c(278): error:  #136: struct "<unnamed>" has no field "GPIO_Speed"
+        GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+..\fatfs\drivers\fatfs_sd.c(299): warning:  #223-D: function "GPIO_ReadInputDataBit" declared implicitly
+        return GPIO_ReadInputDataBit(FATFS_USE_DETECT_PIN_PORT, FATFS_USE_DETECT_PIN_PIN) == Bit_RESET;
+..\fatfs\drivers\fatfs_sd.c(299): error:  #20: identifier "Bit_RESET" is undefined
+        return GPIO_ReadInputDataBit(FATFS_USE_DETECT_PIN_PORT, FATFS_USE_DETECT_PIN_PIN) == Bit_RESET;
+..\fatfs\drivers\fatfs_sd.c(333): warning:  #223-D: function "TM_DELAY_SetTime2" declared implicitly
+                TM_DELAY_SetTime2(1000);
+..\fatfs\drivers\fatfs_sd.c(337): warning:  #223-D: function "TM_DELAY_Time2" declared implicitly
+                                while (TM_DELAY_Time2() && send_cmd(ACMD41, 1UL << 30)) ;       /* Wait for end of initialization with ACMD41(HCS) */
+..\fatfs\drivers\fatfs_sd.c(338): warning:  #223-D: function "TM_DELAY_Time2" declared implicitly
+                                if (TM_DELAY_Time2() && send_cmd(CMD58, 0) == 0) {              /* Check CCS bit in the OCR */
+..\fatfs\drivers\fatfs_sd.c(351): warning:  #223-D: function "TM_DELAY_Time2" declared implicitly
+                        while (TM_DELAY_Time2() && send_cmd(cmd, 0));                   /* Wait for end of initialization */
+..\fatfs\drivers\fatfs_sd.c(352): warning:  #223-D: function "TM_DELAY_Time2" declared implicitly
+                        if (TM_DELAY_Time2() || send_cmd(CMD16, 512) != 0) {    /* Set block length: 512 */
+..\fatfs\drivers\fatfs_sd.c: 18 warnings, 22 errors
+"Program_FreeRTOS Configuration\Program_FreeRTOS Configuration.axf" - 22 Error(s), 18 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\Temp\01_MC\SmartWatch\WakeUp\Program_FreeRTOS\MDK-ARM\RTE
+  C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
 
 <h2>Collection of Component Files used:</h2>
+Target not created.
 </pre>
 </body>
 </html>

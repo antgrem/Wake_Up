@@ -59,8 +59,11 @@ program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Librar
 program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h
 program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h
 program_freertos configuration\main.o: ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h
+<<<<<<< HEAD
 program_freertos configuration\main.o: ..\Inc\lm75.h
 program_freertos configuration\main.o: ..\fatfs\drivers\fatfs_sd.h
 program_freertos configuration\main.o: ..\fatfs\diskio.h
 program_freertos configuration\main.o: ..\fatfs\integer.h
 program_freertos configuration\main.o: ..\TM\tm_stm32f4_spi.h
+=======
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f

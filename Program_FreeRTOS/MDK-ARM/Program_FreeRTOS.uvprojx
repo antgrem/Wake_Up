@@ -365,7 +365,11 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
+<<<<<<< HEAD
               <IncludePath>..\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3;..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\Middlewares\Third_Party\FreeRTOS\Source\include;..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS;..\Drivers\CMSIS\Include;..\Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\TM;..\fatfs;..\fatfs\drivers;..\fatfs\option</IncludePath>
+=======
+              <IncludePath>..\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3;..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\Middlewares\Third_Party\FreeRTOS\Source\include;..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS;..\Drivers\CMSIS\Include;..\Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\TM;..\fatfs\drivers;..\fatfs;..\fatfs\option</IncludePath>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
             </VariousControls>
           </Cads>
           <Aads>
@@ -681,7 +685,11 @@
           </Files>
         </Group>
         <Group>
+<<<<<<< HEAD
           <GroupName>Fatfs</GroupName>
+=======
+          <GroupName>FatFS</GroupName>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
           <Files>
             <File>
               <FileName>diskio.c</FileName>
@@ -694,6 +702,7 @@
               <FilePath>..\fatfs\ff.c</FilePath>
             </File>
             <File>
+<<<<<<< HEAD
               <FileName>fatfs_sd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\fatfs\drivers\fatfs_sd.c</FilePath>
@@ -707,6 +716,16 @@
               <FileName>unicode.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\fatfs\option\unicode.c</FilePath>
+=======
+              <FileName>unicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fatfs\option\unicode.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatfs_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fatfs\drivers\fatfs_sd.c</FilePath>
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
             </File>
           </Files>
         </Group>

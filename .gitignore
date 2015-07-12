@@ -1,0 +1,3 @@
+\Program_FreeRTOS\MDK-ARM\Program_FreeRTOS Configuration\*.o
+*.elf
+*.crf

@@ -494,6 +494,7 @@ ARM Macro Assembler    Page 8
   322 0000001C                 END
               00000000 
               00000000 
+<<<<<<< HEAD
 Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend="program
 _freertos configuration\startup_stm32f103xb.d" -o"program_freertos configuratio
 n\startup_stm32f103xb.o" -I..\Inc -ID:\01_Git\Wake_Up\Program_FreeRTOS\MDK-ARM\
@@ -501,6 +502,16 @@ RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include -IC:\Keil_v5\
 ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSIO
 N SETA 513" --predefine="STM32F10X_MD SETA 1" --list=startup_stm32f103xb.lst ..
 \Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\arm\startup_stm32f103xb.s
+=======
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend="program_freertos configuration\startup_stm32f103xb.d" -o"program_
+freertos configuration\startup_stm32f103xb.o" -I..\Inc -ID:\Temp\01_MC\SmartWat
+ch\WakeUp\Program_FreeRTOS\MDK-ARM\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP
+\1.1.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1
+" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 514" --pr
+edefine="STM32F10X_MD SETA 1" --list=startup_stm32f103xb.lst ..\Drivers\CMSIS\D
+evice\ST\STM32F1xx\Source\Templates\arm\startup_stm32f103xb.s
+>>>>>>> 05b46577147c280e3da4c2afb5d0b296b27aba6f
 
 
 
