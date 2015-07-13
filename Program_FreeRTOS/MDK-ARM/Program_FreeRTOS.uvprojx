@@ -484,24 +484,19 @@
               <FilePath>..\Src\main.c</FilePath>
             </File>
             <File>
-              <FileName>LM75.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Src\LM75.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Src\stm32f10x_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>tm_stm32f4_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\TM\tm_stm32f4_spi.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_spi.c</FileName>
+              <FileName>tm_stm32f4_fatfs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Src\stm32f10x_spi.c</FilePath>
+              <FilePath>..\TM\tm_stm32f4_fatfs.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\tm_stm32f4_delay.c</FilePath>
             </File>
           </Files>
         </Group>

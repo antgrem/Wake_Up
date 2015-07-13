@@ -43,6 +43,8 @@
 /* External variables --------------------------------------------------------*/
 extern void xPortSysTickHandler(void);
 extern PCD_HandleTypeDef hpcd_USB_FS;
+extern __IO uint32_t TM_Time;
+extern __IO uint32_t TM_Time2;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
@@ -59,7 +61,10 @@ void SysTick_Handler(void)
   HAL_IncTick();
   osSystickHandler();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
+	TM_Time++;
+	if (TM_Time2 != 0x00) {
+		TM_Time2--;
+	}
   /* USER CODE END SysTick_IRQn 1 */
 }
 

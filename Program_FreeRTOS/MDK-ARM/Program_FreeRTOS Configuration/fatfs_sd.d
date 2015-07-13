@@ -35,3 +35,6 @@ program_freertos configuration\fatfs_sd.o: ..\Drivers\STM32F1xx_HAL_Driver\Inc\s
 program_freertos configuration\fatfs_sd.o: ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h
 program_freertos configuration\fatfs_sd.o: ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h
 program_freertos configuration\fatfs_sd.o: ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h
+program_freertos configuration\fatfs_sd.o: ..\TM\tm_stm32f4_spi.h
+program_freertos configuration\fatfs_sd.o: ..\Inc\tm_stm32f4_delay.h
+program_freertos configuration\fatfs_sd.o: ..\Inc\tm_stm32f4_delay.h

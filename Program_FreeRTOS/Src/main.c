@@ -36,8 +36,9 @@
 #include "cmsis_os.h"
 #include "usb_device.h"
 #include "usbd_cdc_if.h"
-#include <lm75.h>
+//#include <lm75.h>
 #include "fatfs_sd.h"
+#include "tm_stm32f4_fatfs.h"
 
 /* USER CODE BEGIN Includes */
 #define ADC_0V_VALUE                            0
@@ -78,14 +79,24 @@ static void MX_TIM1_Init(void);
 void StartDefaultTask(void const * argument);
 void UserDefaultTask(void const * argument);
 void Work_with_ADC(void);
-void LM75_RW(void);
+//void LM75_RW(void);
 
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-uint16_t adc_X = 0, adc_Y = 0, adc_Z = 0;
+	uint16_t adc_X = 0, adc_Y = 0, adc_Z = 0;
+  char buffer[100];
+
+		/* Fatfs object */
+	FATFS FatFs;
+	/* File object */
+	FIL fil, fil_Tempr;
+	/* Free and total space */
+	uint32_t total, free_fat;
+	
+	FRESULT temp_sd_res;
 /* USER CODE END 0 */
 
 int main(void)
@@ -124,6 +135,81 @@ int main(void)
 //			TM_I2C_Write(STMPE811_I2C, STMPE811_ADDRESS, STMPE811_INT_EN, 0x01);	
 //		
 //		};
+
+ 
+			if (f_mount(&FatFs, "0:", 1) == FR_OK) 
+				{
+//							//Get time
+//						TM_RTC_GetDateTime(&datatime, TM_RTC_Format_BIN);
+//				//	sprintf(buffer, "0:F%02d_%02d_%04d.txt", datatime.date, datatime.month, datatime.year);
+//						sprintf(file_name_data, "0:%04d_%02d_%02d_Watt.txt", datatime.year+2000, datatime.month, datatime.date);
+//					temp_sd_res = f_open(&fil, (TCHAR*) file_name_data, FA_OPEN_EXISTING | FA_READ | FA_WRITE);
+//							if (temp_sd_res != FR_OK) 
+//								{
+//									if (f_open(&fil, file_name_data, FA_CREATE_NEW | FA_READ | FA_WRITE) == FR_OK)
+//										{//write redline
+//											sprintf(buffer, "Data\t\tTime\t\tVoltage\tCurrent\tWatt\n");
+//											if(f_lseek(&fil, f_size(&fil)) == FR_OK){};
+//												
+//												/* If we put more than 0 characters (everything OK) */
+//												if (f_puts(buffer, &fil) > 0) {
+//													if (TM_FATFS_DriveSize(&total, &free_fat) == FR_OK) {
+//														/* Data for drive size are valid */
+//														/* Close file, don't forget this! */
+//														f_close(&fil);
+//													}
+//											}
+//										}
+//									}
+//								else f_close(&fil);//file exists, was openned and must be closed
+//									
+//							sprintf(file_name_tempr, "0:%04d_%02d_%02d_Tempr_Pr.txt", datatime.year+2000, datatime.month, datatime.date);
+//							temp_sd_res = f_open(&fil, (TCHAR*) file_name_tempr, FA_OPEN_EXISTING | FA_READ | FA_WRITE);
+//							if (temp_sd_res != FR_OK) 
+//								{
+//									if (f_open(&fil, file_name_tempr, FA_CREATE_NEW | FA_READ | FA_WRITE) == FR_OK)
+//										{//write redline
+//											sprintf(buffer, "Data\t\tTime\t\tTempr\tPresure\n");
+//											if(f_lseek(&fil, f_size(&fil)) == FR_OK){};
+//												
+//												/* If we put more than 0 characters (everything OK) */
+//												if (f_puts(buffer, &fil) > 0) {
+//													if (TM_FATFS_DriveSize(&total, &free_fat) == FR_OK) {
+//														/* Data for drive size are valid */
+//														/* Close file, don't forget this! */
+//														f_close(&fil);
+//													}
+//											}
+//										}
+//									}
+//								else f_close(&fil);//file exists, was openned and must be closed
+					
+					
+					temp_sd_res = f_open(&fil, "0:Tempr.txt", FA_OPEN_EXISTING | FA_READ | FA_WRITE);
+					if (temp_sd_res != FR_OK) 
+						{
+							if (f_open(&fil, "0:Tempr.txt", FA_CREATE_NEW | FA_READ | FA_WRITE) == FR_OK)
+								{//write redline
+									sprintf(buffer, "Data\t\tTime\t\tVoltage\tTempr\tPresure\n");
+									if(f_lseek(&fil, f_size(&fil)) == FR_OK){};
+										
+										/* If we put more than 0 characters (everything OK) */
+										if (f_puts(buffer, &fil) > 0) {
+											if (TM_FATFS_DriveSize(&total, &free_fat) == FR_OK) {
+												/* Data for drive size are valid */
+												/* Close file, don't forget this! */
+												f_close(&fil);
+											}
+									}
+								}
+							}
+						else f_close(&fil);//file exists, was openned and must be closed
+							
+							/* Unmount drive, don't forget this! */
+							f_mount(0, "0:", 1);
+					
+				}//end mount SD
+				
 
   /* USER CODE END 2 */
 
@@ -449,21 +535,21 @@ void Work_with_ADC(void)
 //	CDC_Transmit_FS((uint8_t*)str, 3);
 }
 
-void LM75_RW(void)
-{
-	char str[50];
-	uint16_t temp16;
-	
-	adc_X = LM75_Temperature();
-	
-	str[0] = LM75_ReadConf();
-	LM75_WriteConf(str[0] & 0xFE);
-	
-	adc_Y = LM75_ReadReg(LM75_REG_CONF);
-	adc_Z = LM75_ReadReg(LM75_REG_THYS);
-	
-	sprintf(str, "x= %d\n", adc_X);
-}
+//void LM75_RW(void)
+//{
+//	char str[50];
+//	uint16_t temp16;
+//	
+//	adc_X = LM75_Temperature();
+//	
+//	str[0] = LM75_ReadConf();
+//	LM75_WriteConf(str[0] & 0xFE);
+//	
+//	adc_Y = LM75_ReadReg(LM75_REG_CONF);
+//	adc_Z = LM75_ReadReg(LM75_REG_THYS);
+//	
+//	sprintf(str, "x= %d\n", adc_X);
+//}
 /* USER CODE END 4 */
 
 /* StartDefaultTask function */
@@ -497,7 +583,7 @@ void StartDefaultTask(void const * argument)
 	{
 //		Work_with_ADC();
 //		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15);
-		LM75_RW();
+//		LM75_RW();
 		osDelay(100);
 		
 		

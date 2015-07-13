@@ -4,6 +4,8 @@
 
 #include "diskio.h"
 #include "fatfs_sd.h"
+#include "tm_stm32f4_spi.h"
+#include "tm_stm32f4_delay.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -33,9 +35,9 @@ static BYTE TM_FATFS_SD_CardType;			/* Card type flags */
 
 /* Initialize MMC interface */
 static void init_spi (void) {
-	TM_DELAY_Init();
+//	TM_DELAY_Init();
 	
-	TM_SPI_Init(FATFS_SPI, FATFS_SPI_PINSPACK);
+//	TM_SPI_Init(FATFS_SPI, FATFS_SPI_PINSPACK);
 	FATFS_CS_HIGH;
 	
 	Delayms(10);
@@ -258,26 +260,22 @@ static BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
 void TM_FATFS_InitPins(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	
-	RCC_AHB1PeriphClockCmd(FATFS_CS_RCC, ENABLE);	
 	
-	GPIO_InitStruct.GPIO_Pin = FATFS_CS_PIN;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStruct.Pin = FATFS_CS_PIN;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
 	
-	GPIO_Init(FATFS_CS_PORT, &GPIO_InitStruct);
+	HAL_GPIO_Init(FATFS_CS_PORT, &GPIO_InitStruct);
 	
 #if FATFS_USE_DETECT_PIN > 0
-	RCC_AHB1PeriphClockCmd(FATFS_USE_DETECT_PIN_RCC, ENABLE);
 	
-	GPIO_InitStruct.GPIO_Pin = FATFS_USE_DETECT_PIN_PIN;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStruct.Pin = FATFS_USE_DETECT_PIN_PIN;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
 	
-	GPIO_Init(FATFS_USE_DETECT_PIN_PORT, &GPIO_InitStruct);
+	HAL_GPIO_Init(FATFS_USE_DETECT_PIN_PORT, &GPIO_InitStruct);
 #endif
 
 #if FATFS_USE_WRITEPROTECT_PIN > 0
@@ -296,7 +294,7 @@ void TM_FATFS_InitPins(void) {
 
 uint8_t TM_FATFS_Detect(void) {
 #if FATFS_USE_DETECT_PIN > 0
-	return GPIO_ReadInputDataBit(FATFS_USE_DETECT_PIN_PORT, FATFS_USE_DETECT_PIN_PIN) == Bit_RESET;
+	return HAL_GPIO_ReadPin(FATFS_USE_DETECT_PIN_PORT, FATFS_USE_DETECT_PIN_PIN) == GPIO_PIN_RESET;
 #else
 	return 1;
 #endif

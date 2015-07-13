@@ -51,8 +51,9 @@
 #endif
 #endif
 
-#define FATFS_CS_LOW						FATFS_CS_PORT->BSRRH = FATFS_CS_PIN
-#define FATFS_CS_HIGH						FATFS_CS_PORT->BSRRL = FATFS_CS_PIN
+
+#define FATFS_CS_LOW						FATFS_CS_PORT->BRR = FATFS_CS_PIN
+#define FATFS_CS_HIGH						FATFS_CS_PORT->BSRR = FATFS_CS_PIN
 
 /*---------------------------------------*/
 /* Prototypes for disk control functions */

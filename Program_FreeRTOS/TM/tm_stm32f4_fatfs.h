@@ -268,10 +268,9 @@
 /**
  * Includes
  */
-#include "stm32f4xx.h"
-#include "stm32f4xx_rcc.h"
-#include "stm32f4xx_gpio.h"
-#include "defines.h"
+#include "stm32f1xx_hal.h"
+
+
 #include "ff.h"
 
 /* Default truncate buffer size in bytes */
